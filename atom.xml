@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-16T14:34:55.932Z</updated>
+  <updated>2017-07-16T16:29:48.260Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,18 +20,19 @@
     <link href="http://yoursite.com/2017/07/16/%E4%B8%80%E3%80%81%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%91%E5%AE%9A/"/>
     <id>http://yoursite.com/2017/07/16/一、块级作用域绑定/</id>
     <published>2017-07-16T07:05:58.000Z</published>
-    <updated>2017-07-16T14:34:55.932Z</updated>
+    <updated>2017-07-16T16:29:48.260Z</updated>
     
     <content type="html"><![CDATA[<p>原因：var声明和变量提升（Hoisting）机制</p>
 <hr>
 <h1 id="块级声明"><a href="#块级声明" class="headerlink" title="块级声明"></a>块级声明</h1><p>块级声明用于声明在指定块之外无法访问的变量</p>
-<h2 id="块级作用域（词法作用域）："><a href="#块级作用域（词法作用域）：" class="headerlink" title="块级作用域（词法作用域）："></a>块级作用域（词法作用域）：</h2><ul>
+<p>块级作用域（词法作用域）：</p>
+<ul>
 <li>函数内部</li>
 <li>块中{}</li>
 </ul>
-<h3 id="let声明（变量）"><a href="#let声明（变量）" class="headerlink" title="let声明（变量）"></a>let声明（变量）</h3><p>用let替代var来声明变量，可以把变量作用域限制在当前代码块中。由于let声明不会被提升，因此开发者通常使用let声明语句放在封闭代码块的顶部，一遍整个代码块都可以访问</p>
-<h3 id="禁止重声明"><a href="#禁止重声明" class="headerlink" title="禁止重声明"></a>禁止重声明</h3><p>同一作用域中不能用let重复定义已经存在的标识符，否则会抛出错误。但如果当前作用域内嵌另一个作用域，便可在内嵌作用域中用let声明同名变量。</p>
-<h3 id="const声明（常量）"><a href="#const声明（常量）" class="headerlink" title="const声明（常量）"></a>const声明（常量）</h3><ul>
+<h2 id="let声明（变量）"><a href="#let声明（变量）" class="headerlink" title="let声明（变量）"></a>let声明（变量）</h2><p>用let替代var来声明变量，可以把变量作用域限制在当前代码块中。由于let声明不会被提升，因此开发者通常使用let声明语句放在封闭代码块的顶部，一遍整个代码块都可以访问</p>
+<h2 id="禁止重声明"><a href="#禁止重声明" class="headerlink" title="禁止重声明"></a>禁止重声明</h2><p>同一作用域中不能用let重复定义已经存在的标识符，否则会抛出错误。但如果当前作用域内嵌另一个作用域，便可在内嵌作用域中用let声明同名变量。</p>
+<h2 id="const声明（常量）"><a href="#const声明（常量）" class="headerlink" title="const声明（常量）"></a>const声明（常量）</h2><ul>
 <li>const和let声明的都是块级标识符</li>
 <li>其值一旦被设定都不可更改（不可再次赋值）</li>
 <li>每个通过const声明的常量必须进行初始化（赋值）</li>
@@ -39,7 +40,7 @@
 </li>
 </ul>
 <p>修改绑定的值不对报错，但直接给person赋值，既修改person的绑定，会抛出错误。<br><strong>const声明不允许修改绑定，但允许修改绑定的值</strong></p>
-<h3 id="临时死区（Temporal-Dead-Zone-TDZ）"><a href="#临时死区（Temporal-Dead-Zone-TDZ）" class="headerlink" title="临时死区（Temporal Dead Zone/TDZ）"></a>临时死区（Temporal Dead Zone/TDZ）</h3><ul>
+<h2 id="临时死区（Temporal-Dead-Zone-TDZ）"><a href="#临时死区（Temporal-Dead-Zone-TDZ）" class="headerlink" title="临时死区（Temporal Dead Zone/TDZ）"></a>临时死区（Temporal Dead Zone/TDZ）</h2><ul>
 <li>临时死区（Temporal Dead Zone/TDZ），常被用来描述let和const的不提示效果</li>
 <li>只用执行过变量声明语句后，变量才会从TDZ中移出，然后才能正常访问</li>
 <li>但在let声明的作用域外对变量使用typeof则不会报错：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">console.log(typeof value)    // &quot;undefined&quot;</div><div class="line"></div><div class="line">if (condition) &#123;</div><div class="line">    let value = &quot;blue&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
