@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[一、块级作用域绑定]]></title>
+    <url>%2F2017%2F07%2F16%2F%E4%B8%80%E3%80%81%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%91%E5%AE%9A%2F</url>
+    <content type="text"><![CDATA[原因：var声明和变量提升（Hoisting）机制 块级声明块级声明用于声明在指定块之外无法访问的变量 块级作用域（词法作用域）： 函数内部 块中{} let声明（变量）用let替代var来声明变量，可以把变量作用域限制在当前代码块中。由于let声明不会被提升，因此开发者通常使用let声明语句放在封闭代码块的顶部，一遍整个代码块都可以访问 禁止重声明同一作用域中不能用let重复定义已经存在的标识符，否则会抛出错误。但如果当前作用域内嵌另一个作用域，便可在内嵌作用域中用let声明同名变量。 const声明（常量） const和let声明的都是块级标识符 其值一旦被设定都不可更改（不可再次赋值） 每个通过const声明的常量必须进行初始化（赋值） 和其他语言中常量不同的是：es6中如果常量是对象，则对象中的值可以修改（修改对象的属性值）1234567891011const person = &#123; name: &quot;Nicholas&quot;&#125;// 可以修改对象属性的值person.name = &quot;Greg&quot;// 抛出语法错误person = &#123; name： &quot;Greg&quot;&#125; 修改绑定的值不对报错，但直接给person赋值，既修改person的绑定，会抛出错误。const声明不允许修改绑定，但允许修改绑定的值 临时死区（Temporal Dead Zone/TDZ） 临时死区（Temporal Dead Zone/TDZ），常被用来描述let和const的不提示效果 只用执行过变量声明语句后，变量才会从TDZ中移出，然后才能正常访问 但在let声明的作用域外对变量使用typeof则不会报错：12345console.log(typeof value) // &quot;undefined&quot;if (condition) &#123; let value = &quot;blue&quot;&#125; typeof是在声明变量value的代码块外执行的，此时value并不在TDZ中。也就意味着不存在value这个绑定，typeof最终返回”undefined” 循环中的块作用域绑定123456for (let i=0; i&lt;10; i++) &#123; prosess(items[i])&#125;// i在这里不可访问，抛出错误console.log(i) 循环中的函数 长久以来，var声明让开发者在循环中创建函数变得异常困难，因为变量倒了循环之外仍能访问。ES6中let和const提供的块级绑定让我们无需再这么折腾 开发者在循环中使用立即调用函数表达式（IIFE），以强制生成计数器变量的副本 循环中的let声明 每次循环的时候let声明都会创建一个新变量i，并将其初始化为i的当前值 let声明在循环内部的行为是标准中专门定义的，它不一定与let的不提升特性相关，理解这点至关重要 循环中的const声明 对应for循环，可以在初始化变量时使用const，但更改这个变量时就会抛出错误 在for-in和for-of循环中，因为在每次迭代不会修改已有绑定，而是创建一个新绑定，所以不会抛出错误 全局块作用域绑定 当var被用于全局作用域时，它会创建一个新的全局变量作为全局对象（浏览器环境中的window对象）的属性 如果不想为全局对象创建属性，使用let和const则安全得多 如果希望在全局对象下定义变量，仍然可以使用var。这种情况常见于在浏览器中跨frame或跨window访问 块级绑定最佳实践的进化新的理念：默认使用const，只有确实需要改变变量的值时使用let。因为大部分变量的值在初始化后不应再改变，而预料之外的变量值的改变是很多bug的源头。（某种程度上实现代码的不可变，从而防止某些错误的产生）]]></content>
+      <categories>
+        <category>JavaScript</category>
+        <category>ECMAScript2015</category>
+        <category>《深入理解ES6》笔记</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>ES6</tag>
+        <tag>ECMAScript2015</tag>
+        <tag>《深入理解ES6》笔记</tag>
+      </tags>
+  </entry>
+</search>
