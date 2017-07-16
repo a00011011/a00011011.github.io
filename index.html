@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>叶爷的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前端、JavaScript、CSS、HTML、node、Vue">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叶爷的技术博客">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="叶爷的技术博客">
+<meta property="og:description" content="前端、JavaScript、CSS、HTML、node、Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="叶爷的技术博客">
+<meta name="twitter:description" content="前端、JavaScript、CSS、HTML、node、Vue">
+  
+    <link rel="alternate" href="/atom.xml" title="叶爷的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">叶爷的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录、学习、总结</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-一、块级作用域绑定" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/16/一、块级作用域绑定/" class="article-date">
+  <time datetime="2017-07-16T07:05:58.000Z" itemprop="datePublished">2017-07-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/16/一、块级作用域绑定/">一、块级作用域绑定</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、块级作用域绑定"><a href="#一、块级作用域绑定" class="headerlink" title="一、块级作用域绑定"></a>一、块级作用域绑定</h1><blockquote>
+<p>原因：var声明和变量提升（Hoisting）机制</p>
+<h3 id="1-块级声明"><a href="#1-块级声明" class="headerlink" title="1.块级声明"></a>1.块级声明</h3><ul>
+<li>[x] 块级声明用于声明在指定块之外无法访问的变量</li>
+</ul>
+</blockquote>
+<h4 id="块级作用域（词法作用域）："><a href="#块级作用域（词法作用域）：" class="headerlink" title="块级作用域（词法作用域）："></a>块级作用域（词法作用域）：</h4><ul>
+<li>函数内部</li>
+<li>块中{}</li>
+</ul>
+<h5 id="let声明（变量）"><a href="#let声明（变量）" class="headerlink" title="let声明（变量）"></a>let声明（变量）</h5><p>用let替代var来声明变量，可以把变量作用域限制在当前代码块中。由于let声明不会被提升，因此开发者通常使用let声明语句放在封闭代码块的顶部，一遍整个代码块都可以访问</p>
+<h5 id="禁止重声明"><a href="#禁止重声明" class="headerlink" title="禁止重声明"></a>禁止重声明</h5><p>同一作用域中不能用let重复定义已经存在的标识符，否则会抛出错误。但如果当前作用域内嵌另一个作用域，便可在内嵌作用域中用let声明同名变量。</p>
+<h5 id="const声明（常量）"><a href="#const声明（常量）" class="headerlink" title="const声明（常量）"></a>const声明（常量）</h5><ul>
+<li>const和let声明的都是块级标识符</li>
+<li>其值一旦被设定都不可更改（不可再次赋值）</li>
+<li>每个通过const声明的常量必须进行初始化（赋值）</li>
+<li><strong>和其他语言中常量不同的是：es6中如果常量是对象，则对象中的值可以修改（修改对象的属性值）</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">const person = &#123;</div><div class="line">    name: &quot;Nicholas&quot;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 可以修改对象属性的值</div><div class="line">person.name = &quot;Greg&quot;</div><div class="line"></div><div class="line">// 抛出语法错误</div><div class="line">person = &#123;</div><div class="line">    name： &quot;Greg&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>修改绑定的值不对报错，但直接给person赋值，既修改person的绑定，会抛出错误。<br><strong>const声明不允许修改绑定，但允许修改绑定的值</strong></p>
+<h5 id="临时死区（Temporal-Dead-Zone-TDZ）"><a href="#临时死区（Temporal-Dead-Zone-TDZ）" class="headerlink" title="临时死区（Temporal Dead Zone/TDZ）"></a>临时死区（Temporal Dead Zone/TDZ）</h5><ul>
+<li>临时死区（Temporal Dead Zone/TDZ），常被用来描述let和const的不提示效果</li>
+<li>只用执行过变量声明语句后，变量才会从TDZ中移出，然后才能正常访问</li>
+<li>但在let声明的作用域外对变量使用typeof则不会报错：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">console.log(typeof value)    // &quot;undefined&quot;</div><div class="line"></div><div class="line">if (condition) &#123;</div><div class="line">    let value = &quot;blue&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>typeof是在声明变量value的代码块外执行的，此时value并不在TDZ中。也就意味着不存在value这个绑定，typeof最终返回”undefined”</p>
+<h3 id="2-循环中的块作用域绑定"><a href="#2-循环中的块作用域绑定" class="headerlink" title="2.循环中的块作用域绑定"></a>2.循环中的块作用域绑定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for (let i=0; i&lt;10; i++) &#123;</div><div class="line">    prosess(items[i])</div><div class="line">&#125;</div><div class="line"></div><div class="line">// i在这里不可访问，抛出错误</div><div class="line">console.log(i)</div></pre></td></tr></table></figure>
+<h5 id="循环中的函数"><a href="#循环中的函数" class="headerlink" title="循环中的函数"></a>循环中的函数</h5><ul>
+<li>长久以来，var声明让开发者在循环中创建函数变得异常困难，因为变量倒了循环之外仍能访问。ES6中let和const提供的块级绑定让我们无需再这么折腾</li>
+<li>开发者在循环中使用立即调用函数表达式（IIFE），以强制生成计数器变量的副本</li>
+</ul>
+<h5 id="循环中的let声明"><a href="#循环中的let声明" class="headerlink" title="循环中的let声明"></a>循环中的let声明</h5><ul>
+<li>每次循环的时候let声明都会创建一个新变量i，并将其初始化为i的当前值</li>
+<li><strong>let声明在循环内部的行为是标准中专门定义的，它不一定与let的不提升特性相关，理解这点至关重要</strong></li>
+</ul>
+<h5 id="循环中的const声明"><a href="#循环中的const声明" class="headerlink" title="循环中的const声明"></a>循环中的const声明</h5><ul>
+<li>对应for循环，可以在初始化变量时使用const，但更改这个变量时就会抛出错误</li>
+<li>在for-in和for-of循环中，因为在每次迭代不会修改已有绑定，而是创建一个新绑定，所以不会抛出错误</li>
+</ul>
+<h3 id="3-全局块作用域绑定"><a href="#3-全局块作用域绑定" class="headerlink" title="3.全局块作用域绑定"></a>3.全局块作用域绑定</h3><ul>
+<li>当var被用于全局作用域时，它会创建一个新的全局变量作为全局对象（浏览器环境中的window对象）的属性</li>
+<li>如果不想为全局对象创建属性，使用let和const则安全得多</li>
+<li>如果希望在全局对象下定义变量，仍然可以使用var。这种情况常见于在浏览器中跨frame或跨window访问</li>
+</ul>
+<h3 id="4-块级绑定最佳实践的进化"><a href="#4-块级绑定最佳实践的进化" class="headerlink" title="4.块级绑定最佳实践的进化"></a>4.块级绑定最佳实践的进化</h3><p><strong>新的理念：</strong><br>默认使用const，只有确实需要改变变量的值时使用let。因为大部分变量的值在初始化后不应再改变，而预料之外的变量值的改变是很多bug的源头。（某种程度上实现代码的不可变，从而防止某些错误的产生）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/16/一、块级作用域绑定/" data-id="cj56e2eba0002vkmd8pfz4qkp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6-JavaScript-ECMAScript2015/">es6 JavaScript ECMAScript2015</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-My-New-Post" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/16/My-New-Post/" class="article-date">
+  <time datetime="2017-07-16T06:39:09.000Z" itemprop="datePublished">2017-07-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/16/My-New-Post/">My New Post</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/16/My-New-Post/" data-id="cj56e2eay0000vkmdmy7kuip6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/16/hello-world/" class="article-date">
+  <time datetime="2017-07-16T06:33:05.374Z" itemprop="datePublished">2017-07-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/16/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/16/hello-world/" data-id="cj56e2eb60001vkmd5de8siep" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6-JavaScript-ECMAScript2015/">es6 JavaScript ECMAScript2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/es6-JavaScript-ECMAScript2015/" style="font-size: 10px;">es6 JavaScript ECMAScript2015</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/16/一、块级作用域绑定/">一、块级作用域绑定</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/16/My-New-Post/">My New Post</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/16/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 叶爷<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
