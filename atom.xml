@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-16T16:29:48.260Z</updated>
+  <updated>2017-07-17T15:32:46.936Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,115 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>二、字符串和正则表达式</title>
+    <link href="http://yoursite.com/2017/07/17/%E4%BA%8C%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>http://yoursite.com/2017/07/17/二、字符串和正则表达式/</id>
+    <published>2017-07-17T15:31:33.000Z</published>
+    <updated>2017-07-17T15:32:46.936Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="更好的Unicode支持"><a href="#更好的Unicode支持" class="headerlink" title="更好的Unicode支持"></a>更好的Unicode支持</h1><h2 id="UTF-16码位"><a href="#UTF-16码位" class="headerlink" title="UTF-16码位"></a>UTF-16码位</h2><ul>
+<li>UTF-16引入了代理对（surrogate pair），其规定用两个16位编码单元表示一个码位。也就是说，字符串里的字符有两种，一种是由一个编码单元16位表示的BMP字符，一种是由两个编码单元32位表示的辅助平面字符。</li>
+<li>ES6强制使用UTF-16字符串编码，并按照这种字符编码来标准化字符串操作，在JavaScript中增加了专门针对代理对的功能。</li>
+</ul>
+<h2 id="codePointAt-方法"><a href="#codePointAt-方法" class="headerlink" title="codePointAt()方法"></a>codePointAt()方法</h2><p>codePointAt()方法接受编码单元的位置而非字符串的位置作为参数，返回与字符串中给定位置对应的<strong>码位</strong>，既一个整数值。</p>
+<p>对于BMP字符集中的字符，codePointAt()和charCodeAt()方法的相同，而对于非BMP字符集来说返回值则不同。charCodeAt()方法返回的只是位置0处的第一个编码单元，而codePointAt()返回完整的码位，即使这个码位包含多个编码单元。</p>
+<p>要检测一个字符占用的编码单元数量，最简单的方法是调用字符的codePointAt()方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">is32Bit</span>(<span class="params">c</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> c.codePointAt(c) &gt; <span class="number">0xFFFF</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a'</span>)    <span class="comment">// false</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>用16位表示的字符集上界为十六进制FFFF，所以超过这个上界的码位一定由两个编码单元来表示，总共32位。</p>
+</blockquote>
+<h2 id="String-fromCodePoint-方法"><a href="#String-fromCodePoint-方法" class="headerlink" title="String.fromCodePoint()方法"></a>String.fromCodePoint()方法</h2><p>String.fromCodePoint()方法根据指定的码位生成一个字符：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>.fromCodePoint(<span class="number">134071</span>))    <span class="comment">// '𠮷'</span></div></pre></td></tr></table></figure></p>
+<p>可以将String.fromCodePoint()看成是完整版的String.fromCharCode()。对应BMP中所有的字符，两方法执行结果相同。只有传递非BMP字符的码位作为参数，二者的执行结果才有可能不同。</p>
+<h2 id="normalize-方法（国际化应用中常使用）"><a href="#normalize-方法（国际化应用中常使用）" class="headerlink" title="normalize()方法（国际化应用中常使用）"></a>normalize()方法（国际化应用中常使用）</h2><p>normalize()方法提供Unicode的标准化形式：</p>
+<ol>
+<li>以标准等价方式分解，然后以标准等价方式重组(‘NFC’),默认选项。</li>
+<li>以标准等价方式分解(‘NFD’)。</li>
+<li>以兼容等价方式分解(‘NFKC’)。</li>
+<li>以兼容等价方式分解，然后以标准等价方式重组(‘NFKD’)。</li>
+</ol>
+<p><strong>需牢记：在对比字符串之前，一定要先把它们标准化为同一种形式:</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> normalized = values.map(<span class="function"><span class="keyword">function</span>(<span class="params">text</span>) </span>&#123;</div><div class="line">    retrun text.normalize()</div><div class="line">&#125;)</div><div class="line"></div><div class="line">nomralized.sort(funtion(first, second) &#123;</div><div class="line">    <span class="keyword">if</span> (first &lt; second) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (first === second) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>如果相对原始数组进行排序，可以在比较函数中添加normalize()方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">values.sort(funtion(first, second) &#123;</div><div class="line">    <span class="keyword">let</span> firstNormalized = first.normalize(),</div><div class="line">        secondNormalized = second.normalize()</div><div class="line">        </div><div class="line">    <span class="keyword">if</span> (firstNormalized &lt; secondNormalized) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (firstNormalized === secondNormalized) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="正则表达式u修饰符"><a href="#正则表达式u修饰符" class="headerlink" title="正则表达式u修饰符"></a>正则表达式u修饰符</h2><p>解决默认将字符串中的每个字符按照16位编码单元处理的问题。</p>
+<h3 id="u修饰符实例"><a href="#u修饰符实例" class="headerlink" title="u修饰符实例"></a>u修饰符实例</h3><p>当一个正则表达式添加了u修饰符时，它就从编码单元操作模式切换为字符模式，如此一来正则表达式就不会视代理对为两个字符。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> text = <span class="string">'𠮷'</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(text.length)    <span class="comment">// 2</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/^.$/</span>.test(text))    <span class="comment">// false /^.$/匹配所有单字符字符串，'𠮷'由两个编码单元组成</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/^.$/u</span>.test(text))    <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h3 id="计算码位数量"><a href="#计算码位数量" class="headerlink" title="计算码位数量"></a>计算码位数量</h3><p>es6检测字符串的length属性仍然返回字符串编码单元的数量。可以通过正则表达式的u修饰符来解决：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">codePointlength</span>(<span class="params">text</span>) </span>&#123;</div><div class="line">	<span class="keyword">let</span> result = text.match(<span class="regexp">/[\s\S]/gu</span>)</div><div class="line">	<span class="keyword">return</span> result ? result.length : <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(codePointlength(<span class="string">'abc'</span>))    <span class="comment">// 3</span></div><div class="line"><span class="built_in">console</span>.log(codePointlength(<span class="string">'𠮷bc'</span>))    <span class="comment">// 3</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>此方法有效，但运行效率低（可以通过字符串迭代器来解决）</p>
+</blockquote>
+<h3 id="检测u修饰符支持"><a href="#检测u修饰符支持" class="headerlink" title="检测u修饰符支持"></a>检测u修饰符支持</h3><p>检测当前浏览器是否支持u修饰符，最安全的方式是通过以下函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hasRegExpU</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">var</span> pattern = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'.'</span>, <span class="string">'u'</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">    &#125; <span class="keyword">catch</span> (ex) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="其他字符串变更"><a href="#其他字符串变更" class="headerlink" title="其他字符串变更"></a>其他字符串变更</h1><h2 id="字符串中的子串识别"><a href="#字符串中的子串识别" class="headerlink" title="字符串中的子串识别"></a>字符串中的子串识别</h2><p><strong>indexOf()拓展：</strong></p>
+<ul>
+<li>includes()方法，如果在字符串中检测到指定文本则返回true，否则返回false</li>
+<li>startsWith()方法，从字符串起始位置检测</li>
+<li>endsWith()方法，从字符串结束部分检测</li>
+</ul>
+<p>以上3个方法都接收两个参数==&gt; (‘要搜索的文本’, ‘开始搜索的位置的索引’)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> msg = <span class="string">'Hello World!'</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(msg.startsWith(<span class="string">'Hello'</span>))    <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(msg.endsWith(<span class="string">'!'</span>))    <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(msg.includes(<span class="string">'o'</span>))    <span class="comment">// true</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(msg.startsWith(<span class="string">'o'</span>))    <span class="comment">// false</span></div><div class="line"><span class="built_in">console</span>.log(msg.endsWith(<span class="string">'World!'</span>))    <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(msg.includes(<span class="string">'x'</span>))    <span class="comment">// false</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(msg.startsWith(<span class="string">'o'</span>, <span class="number">4</span>))    <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(msg.endsWith(<span class="string">'o'</span>, <span class="number">8</span>))    <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(msg.includes(<span class="string">'o'</span>, <span class="number">8</span>))    <span class="comment">// false</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这三个方法如果没有按照要求传入字符串，而是传入正则表达式，会触发错误。indexOf()和lastIndexOf()则不会,它们会把传入的正则表达式当作字符串并搜索它。</p>
+</blockquote>
+<h3 id="repeat-方法"><a href="#repeat-方法" class="headerlink" title="repeat()方法"></a>repeat()方法</h3><p>repeat()方法接受一个number类型的参数，表示字符串重复的次数，返回值是当前字符串重复一定次数的新字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 缩进指定数量的空格</span></div><div class="line"><span class="keyword">let</span> indent = <span class="string">' '</span>.repeat(<span class="number">4</span>),</div><div class="line">	indentLevel = <span class="number">0</span></div><div class="line"></div><div class="line"><span class="comment">// 当需要增加缩进时</span></div><div class="line"><span class="keyword">let</span> newIndent = indent.repeat(++indentLevel)</div></pre></td></tr></table></figure>
+<h1 id="其他正则表达式语法变更"><a href="#其他正则表达式语法变更" class="headerlink" title="其他正则表达式语法变更"></a>其他正则表达式语法变更</h1><h2 id="正则表达式y修饰符"><a href="#正则表达式y修饰符" class="headerlink" title="正则表达式y修饰符"></a>正则表达式y修饰符</h2><p>y修饰符会影响正则表达式的搜索过程中的sticky属性，当在字符串中开始字符匹配时，它会通知搜索从正则表达式的lastIndex属性开始进行，如果在指定位置没能成功匹配，则停止继续匹配。<br>记住两点：</p>
+<ol>
+<li>只有调用exec()和test()这些正则表达式对象的方法时才会涉及lastIndex属性；</li>
+<li>调用字符串方法，如match()，不会触发粘滞行为。</li>
+</ol>
+<p><strong>检测y修饰符是否存在（通过属性名来检测）：</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> pattern = <span class="regexp">/hello\d/y</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(pattern.sticky)    <span class="comment">// true</span></div></pre></td></tr></table></figure></p>
+<p><strong>检测引擎的支持程度：</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hasRegExpY</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">var</span> pattern = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'.'</span>, <span class="string">'y'</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">    &#125; <span class="keyword">catch</span> (ex) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">hasRegExpY()</div></pre></td></tr></table></figure></p>
+<h2 id="正则表达式的复制"><a href="#正则表达式的复制" class="headerlink" title="正则表达式的复制"></a>正则表达式的复制</h2><p>es5中通过给RegExp构造函数传递正则表达式作为参数来复制这个正则表达式，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> re1 = <span class="regexp">/ab/i</span></div><div class="line">    re2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(re1)</div></pre></td></tr></table></figure></p>
+<p>但是给RegExp构造函数提供第二个参数，为正则表达式指定一个修饰符，则代码无法运行：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> re1 = <span class="regexp">/ab/i</span></div><div class="line"></div><div class="line">    <span class="comment">// es5中抛出错误，es6中正常</span></div><div class="line">    re2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(re1, <span class="string">'g'</span>)    <span class="comment">// es6中第二个参数修改第一个参数的修饰符</span></div></pre></td></tr></table></figure></p>
+<h2 id="flags属性"><a href="#flags属性" class="headerlink" title="flags属性"></a>flags属性</h2><p>ES6中用来获取正则表达式的修饰符<br>ES5和ES6中通过source属性获取正则表达式的文本</p>
+<p>ES5中这样获取：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFlags</span>(<span class="params">re</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> text = re.toString()</div><div class="line">    <span class="keyword">return</span> text.substring(text.lastIndexOf(<span class="string">'/'</span>)+<span class="number">1</span>, text.length)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> re = <span class="regexp">/ab/g</span></div><div class="line"><span class="built_in">console</span>.log(getFlags(re))    <span class="comment">// 'g'</span></div></pre></td></tr></table></figure></p>
+<p>flags属性和source属性都是<strong>只读的原型属性访问器</strong>，对齐只设置了getter方法。访问flags属性会返回所有应用于当前正则表达式的修饰符字符串。如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> re = <span class="regexp">/ab/g</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(re.source)    <span class="comment">// 'ab'</span></div><div class="line"><span class="built_in">console</span>.log(re.flags)    <span class="comment">// 'g'</span></div></pre></td></tr></table></figure></p>
+<h2 id="模板字面量"><a href="#模板字面量" class="headerlink" title="模板字面量"></a>模板字面量</h2><p>ES6模板字面量语法支持创建专用领域语言（DSL,是与JavaScript概念相反的编程语言，通常是指某些具体且有限的目标设计的语言)。</p>
+<blockquote>
+<p>模板字面量是拓展ECMAScript基础语法的语法糖，其提供一套生成、查询并操作来自其他语言里的内容的DSL，且可以免受注入攻击。</p>
+</blockquote>
+<p>新特性：</p>
+<ol>
+<li>多行字符串</li>
+<li>基本的字符串格式化（将变量的值嵌入字符串的能力）</li>
+<li>HTML转义（向HTML插入经过安全转换后的字符串的能力）</li>
+</ol>
+<h3 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h3><ul>
+<li>用反撇号（`）替换单、双引号</li>
+<li>在字符串中使用反撇号，要用反斜杠（\）将其转义</li>
+<li>在模板字面量中，不需要转义单、双引号</li>
+</ul>
+<h3 id="多行字符串"><a href="#多行字符串" class="headerlink" title="多行字符串"></a>多行字符串</h3><p>在ES6之前，通常依靠数组或字符串拼接的方法来创建多行字符串，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> message = [</div><div class="line">    <span class="string">'Multiline '</span>,</div><div class="line">    <span class="string">'string'</span></div><div class="line">].join(<span class="string">'\n'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 或者</span></div><div class="line"><span class="keyword">let</span> message = <span class="string">'Multiline \n'</span> + </div><div class="line">    <span class="string">'string'</span></div></pre></td></tr></table></figure></p>
+<h3 id="简化多行字符串"><a href="#简化多行字符串" class="headerlink" title="简化多行字符串"></a>简化多行字符串</h3><ul>
+<li>需要在字符串中添加新的一行，只需在代码中直接换行</li>
+<li><p>在反撇号中所有的空白符都属于字符串的一部分，所以要千万小心缩进。如果要通过适当的缩进来对齐文本，可以考虑在多行模板字面量的第一行留白，并在后面几行中缩进。如:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> html = <span class="string">`</span></div><div class="line">&lt;div&gt;</div><div class="line">    &lt;h1&gt;Title&lt;/h1&gt;</div><div class="line">&lt;/div&gt;`.trim()</div></pre></td></tr></table></figure>
+</li>
+<li><p>也可以在模板字面量中显式的使用\n,来指明插入新行的位置</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;更好的Unicode支持&quot;&gt;&lt;a href=&quot;#更好的Unicode支持&quot; class=&quot;headerlink&quot; title=&quot;更好的Unicode支持&quot;&gt;&lt;/a&gt;更好的Unicode支持&lt;/h1&gt;&lt;h2 id=&quot;UTF-16码位&quot;&gt;&lt;a href=&quot;#UTF-1
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+      <category term="ECMAScript2015" scheme="http://yoursite.com/categories/JavaScript/ECMAScript2015/"/>
+    
+      <category term="《深入理解ES6》笔记" scheme="http://yoursite.com/categories/JavaScript/ECMAScript2015/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3ES6%E3%80%8B%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+    
+      <category term="ES6" scheme="http://yoursite.com/tags/ES6/"/>
+    
+      <category term="ECMAScript2015" scheme="http://yoursite.com/tags/ECMAScript2015/"/>
+    
+      <category term="《深入理解ES6》笔记" scheme="http://yoursite.com/tags/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3ES6%E3%80%8B%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>一、块级作用域绑定</title>
