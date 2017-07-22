@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-22T13:43:33.583Z</updated>
+  <updated>2017-07-22T14:19:30.479Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,50 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>javascript的self和this</title>
+    <link href="http://yoursite.com/2017/07/22/000%E3%80%90%E5%9D%91-es5%E3%80%91javascript%E7%9A%84self%E5%92%8Cthis/"/>
+    <id>http://yoursite.com/2017/07/22/000【坑-es5】javascript的self和this/</id>
+    <published>2017-07-22T13:58:31.000Z</published>
+    <updated>2017-07-22T14:19:30.479Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="self"><a href="#self" class="headerlink" title="self"></a>self</h1><p>打开任何一个网页，浏览器会首先创建一个窗口，这个窗口就是一个window对象，也是js运行所依附的全局环境对象和全局作用域对象。self指窗口本身，它返回的对象跟window对象是一模一样的。</p>
+<h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><p>c#有this关键字，它的主要作用就是指代当前对象实例（参数传递和索引器都要用到this）。在javascript中，this通常指向的是我们正在执行的函数本身，或者是指向该函数所属的对象（运行时）。</p>
+<ol>
+<li><p>不正确的方式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">function thisTest()&#123;</div><div class="line">    alert(this.value); // 弹出undefined, this在这里指向??</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;input id="btnTest" type="button" value="提交" onclick="thisTest()" /&gt;</div></pre></td></tr></table></figure>
+<p>分析：onclick事件直接调用thisTest函数，程序就会弹出undefined。因为thisTest函数是在window对象中定义的，所以thisTest的拥有者（作用域）是window，thisTest的this也是window。而window是没有value属性的，所以就报错了。</p>
+</li>
+<li><p>正确的方式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> &lt;input id=<span class="string">"btnTest"</span> type=<span class="string">"button"</span> value=<span class="string">"提交"</span> /&gt;</div><div class="line"></div><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">function thisTest()&#123;</div><div class="line">    alert(this.value); </div><div class="line">&#125;   </div><div class="line">document.getElementById("btnTest").onclick=thisTest;                //给button的onclick事件注册一个函数</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;self&quot;&gt;&lt;a href=&quot;#self&quot; class=&quot;headerlink&quot; title=&quot;self&quot;&gt;&lt;/a&gt;self&lt;/h1&gt;&lt;p&gt;打开任何一个网页，浏览器会首先创建一个窗口，这个窗口就是一个window对象，也是js运行所依附的全局环境对象和全局作用域对
+    
+    </summary>
+    
+      <category term="项目中遇到的坑" scheme="http://yoursite.com/categories/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/"/>
+    
+      <category term="ES5" scheme="http://yoursite.com/categories/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/ES5/"/>
+    
+    
+      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+    
+      <category term="ES5" scheme="http://yoursite.com/tags/ES5/"/>
+    
+      <category term="this.self" scheme="http://yoursite.com/tags/this-self/"/>
+    
+  </entry>
+  
+  <entry>
     <title>三、函数</title>
-    <link href="http://yoursite.com/2017/07/22/%E4%B8%89%E3%80%81%E5%87%BD%E6%95%B0/"/>
-    <id>http://yoursite.com/2017/07/22/三、函数/</id>
+    <link href="http://yoursite.com/2017/07/22/101%E3%80%90ES6-%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3ES6%E3%80%8B%E7%AC%94%E8%AE%B0%E3%80%91%E4%B8%89%E3%80%81%E5%87%BD%E6%95%B0/"/>
+    <id>http://yoursite.com/2017/07/22/101【ES6-《深入理解ES6》笔记】三、函数/</id>
     <published>2017-07-22T13:42:26.000Z</published>
-    <updated>2017-07-22T13:43:33.583Z</updated>
+    <updated>2017-07-22T13:46:33.856Z</updated>
     
     <content type="html"><![CDATA[<h1 id="函数形参的默认值"><a href="#函数形参的默认值" class="headerlink" title="函数形参的默认值"></a>函数形参的默认值</h1><h2 id="在ES5中模拟默认参数"><a href="#在ES5中模拟默认参数" class="headerlink" title="在ES5中模拟默认参数"></a>在ES5中模拟默认参数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeRequest</span> (<span class="params">url, timeout, callback</span>) </span>&#123;</div><div class="line">    timeout = (<span class="keyword">typeof</span> timeout !== <span class="string">'undefined'</span>) ? timeout : <span class="number">2000</span></div><div class="line">    callback = (<span class="keyword">typeof</span> callback !== <span class="string">'undefined'</span>) ? callback : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</div><div class="line">    </div><div class="line">    <span class="comment">// ....</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="ES6中的默认参数值"><a href="#ES6中的默认参数值" class="headerlink" title="ES6中的默认参数值"></a>ES6中的默认参数值</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> (<span class="params">url, timeout = <span class="number">2000</span>, callback = function (</span>) </span>&#123;&#125;) &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -78,7 +117,9 @@
 <h1 id="明确函数的多重用途"><a href="#明确函数的多重用途" class="headerlink" title="明确函数的多重用途"></a>明确函数的多重用途</h1><p>JavaScript函数有两个不同的内部方法：[[Call]]和[[Construct]]。当通过new关键字调用函数时，执行的是[[Construct]]函数。、，它负责创建一个通常被称为实例的新对象，然后再执行函数体，将this绑定到实例上；如果不通过new关键字调用函数，则执行[[Call]]函数，从而直接执行代码中的函数体。具有[[Construct]]的函数被统称为构造函数。<br>**切记：不是所有函数都有[[Construct]]方法，因此不是所有函数都可以用new来调用，如箭头函数。</p>
 <h2 id="原属性（Metaproperty）-new-target"><a href="#原属性（Metaproperty）-new-target" class="headerlink" title="原属性（Metaproperty） new.target"></a>原属性（Metaproperty） new.target</h2><p>为了解决判断函数是否通过new关键字调用的问题，ES6引入了new.target这个元属性。元属性是指非对象的属性，其可以提供非对象目标的补充信息（如new）。<br>当调用函数的[[Construct]方法时，new.target被赋值为new操作符的目标，通常是新创建对象实例，也就是函数体内this的构造函数；如果调用[[Call]]方法，则new.target的值为undefined。</p>
 <p>检测一个函数是否通过new关键字调用的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">new</span>.target !== <span class="string">'undefined'</span>) &#123;</div><div class="line">    <span class="comment">// 或者</span></div><div class="line">    <span class="comment">// if (typeof new.target === Person) &#123;</span></div><div class="line">        <span class="keyword">this</span>.name = name</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'必须通过new关键字来调用Person。'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person(<span class="string">'Even'</span>)</div><div class="line"><span class="keyword">var</span> notAPerson = Person.call(person, <span class="string">'jack'</span>)    <span class="comment">// Uncaught Error: 必须通过new关键字来调用Person。</span></div></pre></td></tr></table></figure></p>
-<h2 id="gt-在函数外使用new-target是一个语法错误。"><a href="#gt-在函数外使用new-target是一个语法错误。" class="headerlink" title="&gt; 在函数外使用new.target是一个语法错误。"></a>&gt; 在函数外使用new.target是一个语法错误。</h2><h1 id="块级函数"><a href="#块级函数" class="headerlink" title="块级函数"></a>块级函数</h1><p>ES5中的严格模式中引入了一个错误提示，当在代码块内部声明函数时会抛出错误：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">    </div><div class="line">    <span class="comment">// 在ES5中抛出语法错误，在ES6中不报错</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// 空函数</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>在函数外使用new.target是一个语法错误。</strong></p>
+<hr>
+<h1 id="块级函数"><a href="#块级函数" class="headerlink" title="块级函数"></a>块级函数</h1><p>ES5中的严格模式中引入了一个错误提示，当在代码块内部声明函数时会抛出错误：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">    </div><div class="line">    <span class="comment">// 在ES5中抛出语法错误，在ES6中不报错</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// 空函数</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在ES6中，会将doSomething视作一个块级声明，从而可以在定义该函数的代码块内部访问和调用它。如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line"></div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">typeof</span> doSomething)    <span class="comment">// 'function'</span></div><div class="line">    </div><div class="line">    <span class="comment">// 在ES5中抛出语法错误，在ES6中不报错</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// 空函数</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    doSomething()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> doSomething) <span class="comment">// 'undefined'</span></div></pre></td></tr></table></figure></p>
 <p>在定义函数的代码块内，块级函数会被提升至顶部，所以typeof doSomething 的值为’function’，这也佐证了，即使在函数定义前使用它，还是能返回正确的值；<br>但是一旦if语句代码块结束执行，doSomething()函数将不再存在。</p>
 <h2 id="块级函数的使用场景"><a href="#块级函数的使用场景" class="headerlink" title="块级函数的使用场景"></a>块级函数的使用场景</h2><p>块级函数与let函数表达式类似，一旦执行过程流出了代码块，函数定义立即被移除。二者的区别是，在该代码块中，块级函数会被提升至块的顶部，二let定义的函数表达式不会被提升。如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line"></div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">typeof</span> doSomething)    <span class="comment">// Uncaught ReferenceError: doSomething is not defined</span></div><div class="line">    </div><div class="line">    <span class="keyword">let</span> doSomething = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// 空函数</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    doSomething()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> doSomething) <span class="comment">// 'undefined'</span></div></pre></td></tr></table></figure></p>
@@ -156,8 +197,8 @@
   
   <entry>
     <title>二、字符串和正则表达式</title>
-    <link href="http://yoursite.com/2017/07/17/%E4%BA%8C%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/07/17/二、字符串和正则表达式/</id>
+    <link href="http://yoursite.com/2017/07/17/101%E3%80%90ES6-%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3ES6%E3%80%8B%E7%AC%94%E8%AE%B0%E3%80%91%E4%BA%8C%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>http://yoursite.com/2017/07/17/101【ES6-《深入理解ES6》笔记】二、字符串和正则表达式/</id>
     <published>2017-07-17T15:31:33.000Z</published>
     <updated>2017-07-17T17:37:34.441Z</updated>
     
@@ -273,8 +314,8 @@
   
   <entry>
     <title>一、块级作用域绑定</title>
-    <link href="http://yoursite.com/2017/07/16/%E4%B8%80%E3%80%81%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%91%E5%AE%9A/"/>
-    <id>http://yoursite.com/2017/07/16/一、块级作用域绑定/</id>
+    <link href="http://yoursite.com/2017/07/16/101%E3%80%90ES6-%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3ES6%E3%80%8B%E7%AC%94%E8%AE%B0%E3%80%91%E4%B8%80%E3%80%81%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%BB%91%E5%AE%9A/"/>
+    <id>http://yoursite.com/2017/07/16/101【ES6-《深入理解ES6》笔记】一、块级作用域绑定/</id>
     <published>2017-07-16T07:05:58.000Z</published>
     <updated>2017-07-16T16:29:48.260Z</updated>
     
